@@ -5,6 +5,7 @@ const getSecondElement = strings[2]; // O(1)
 console.log(getSecondElement);
 
 // push: To push an element into an array
+// push could be O(n) for dynamic arrays
 strings.push("e"); // O(1)
 console.log(strings);
 
