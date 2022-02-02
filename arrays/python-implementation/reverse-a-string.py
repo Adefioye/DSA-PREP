@@ -18,3 +18,4 @@ def reverse_a_string(string):
 print(reverse_a_string(my_string))
 print(reverse_a_string("a"))
 print(reverse_a_string("abcd"))
+print(reverse_a_string(["abcd"]))
