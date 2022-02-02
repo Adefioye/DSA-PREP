@@ -3,8 +3,8 @@ class MyArray:
         self.length = 0
         self.data = {}
 
-    def __str__(self):
-        return str(self.__dict__)
+    # def __str__(self):
+    #     return str(self.__dict__)
 
     def get(self, index):
         return self.data[index]
