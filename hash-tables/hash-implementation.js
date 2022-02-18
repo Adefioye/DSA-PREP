@@ -39,6 +39,7 @@ class HashTable {
 
   set(key, value) {
     let address = this._hash(key);
+    console.log(address)
     if (!this.data[address]) {
       this.data[address] = [];
     }
