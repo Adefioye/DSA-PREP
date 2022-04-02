@@ -21,7 +21,7 @@ class hash_table:
 
         self.data[address].append([key, value])
 
-        return self.data
+        # return self.data
 
     def get(self, key):
         address = self._hash(key) 
@@ -66,5 +66,6 @@ print(my_hash.get("lion"))
 print(my_hash.get("tiger"))
 print(my_hash.keys())
 print(my_hash.values())
+print(my_hash)
 
     
