@@ -87,6 +87,21 @@ class linked_list:
         
         return current_node
 
+    def reverse(self):
+        current_node = self.head 
+        self.tail = self.head
+        follower_node = current_node["next"]
+        while follower_node:
+            temp_node = follower_node["next"] 
+            follower_node["next"] = current_node
+            current_node = follower_node
+            follower_node = temp_node
+        self.head["next"] = None 
+        self.head = current_node
+
+        return self
+    
+
 
 
 
@@ -109,4 +124,6 @@ my_linked_list.remove(4)
 print(my_linked_list.print_values())
 my_linked_list.remove(2)
 print(my_linked_list.print_values())
-print(my_linked_list)
+
+
+print(my_linked_list.reverse())
