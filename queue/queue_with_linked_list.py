@@ -25,13 +25,12 @@ class queue:
             self.first = new_node 
             self.last = self.first 
         else:
-            former_first_node = self.first 
-            self.first = new_node 
-            self.first.next = former_first_node 
+            self.last.next = new_node
+            self.last = new_node
         
         self.length += 1 
 
-        return self 
+        return self
 
 
     def dequeue(self):
@@ -61,3 +60,5 @@ print(my_stack.dequeue())
 print(my_stack.dequeue())
 print(my_stack.dequeue())
 print(my_stack.dequeue())
+print(my_stack.dequeue())
+
