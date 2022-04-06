@@ -1,6 +1,6 @@
 # 9 --> 10 --> 99 --> 5 --> 7
 
-class linked_list:
+class singly_linked_list:
     def __init__(self, value):
         self.head = {
             "value": value,
@@ -45,12 +45,9 @@ class linked_list:
 
         if (index > self.length):
             self.append(value)
-            self.length += 1 
         elif (index == 0):
             self.prepend(value)
-            self.length += 1 
         else:
-
             new_node = {
             "value": value,
             "next": None
@@ -60,7 +57,7 @@ class linked_list:
             follower_node = leader_node["next"]
             leader_node["next"] = new_node 
             new_node["next"] = follower_node 
-            self.length + 1
+            self.length += 1
 
     def remove(self, index):
 
@@ -96,7 +93,8 @@ class linked_list:
             follower_node["next"] = current_node
             current_node = follower_node
             follower_node = temp_node
-        self.head["next"] = None 
+
+        self.head["next"] = None
         self.head = current_node
 
         return self
@@ -109,7 +107,7 @@ class linked_list:
 
 # 9 --> 10 --> 99 --> 5 --> 7
 
-my_linked_list = linked_list(10)
+my_linked_list = singly_linked_list(10)
 my_linked_list.append(5)
 my_linked_list.prepend(9)
 my_linked_list.insert(0, 99)
@@ -126,4 +124,5 @@ my_linked_list.remove(2)
 print(my_linked_list.print_values())
 
 
-print(my_linked_list.reverse())
+my_linked_list.reverse()
+print(my_linked_list.print_values())
