@@ -1,4 +1,5 @@
 from anyio import current_time
+from sqlalchemy import null
 
 
 class node:
@@ -82,14 +83,59 @@ class binary_search_tree:
 
         if (type(result) == str):
             return result 
-        parent_node = result["parent_node"]
-        unwanted_node = result["current_node"]
-            # while True:
 
+        else:
+            parent_node = result["parent_node"]
+            unwanted_node = result["current_node"]
 
+            # Case 1: No child, hence find parent node and point to null
+            if (unwanted_node.left == None and unwanted_node.right == None):
+                if parent_node.left == unwanted_node:
+                    parent_node.left = None 
+                    self.length -= 1
+                elif parent_node.right == unwanted_node:
+                    parent_node.right = None 
+                    self.length -= 1 
+
+            # Case 2: One child, hence point parent node to the child of the unwanted node
+            elif (unwanted_node.left or unwanted_node.right):
+                if unwanted_node.left:
+                    unwanted_node_child = unwanted_node.left 
+                else:
+                    unwanted_node_child = unwanted_node.right 
+
+                if parent_node.left == unwanted_node:
+                    parent_node.left = unwanted_node_child
+                    self.length -= 1
+                elif parent_node.right == unwanted_node:
+                    parent_node.right = unwanted_node_child
+                    self.length -= 1 
+
+            # Case 3: Two children, find minimum node of right subtree, copy and point parent node to it and delete it from original position in right subtree
+            elif (unwanted_node.left and unwanted_node.right):
+                right_child_sub_tree = unwanted_node.right 
+
+                # Find minimum node on right subtree and its parent
+                min_node = right_child_sub_tree 
+                parent_min_node = right_child_sub_tree
+                while (min_node.left != None):
+                    parent_node = min_node 
+                    min_node = min_node.left 
                 
+                if (parent_node.left == unwanted_node):
+                    parent_node.left = min_node 
+                    min_node.right = right_child_sub_tree 
+                    parent_min_node.left = None 
+                    self.length -=1
 
-        return (parent_node, unwanted_node)
+                elif (parent_node.right == unwanted_node):
+                    parent_node.right = min_node
+                    min_node.right = right_child_sub_tree 
+                    parent_min_node.left = None 
+                    self.length -= 1
+
+
+        return self.root
 
     def print_tree(self):
         if (self.root != None):
@@ -103,15 +149,18 @@ class binary_search_tree:
 
 
 bst = binary_search_tree()
-bst.insert(10)
 bst.insert(5)
-bst.insert(6)
-bst.insert(12)
-bst.insert(8)
+bst.insert(3)
+bst.insert(7)
+bst.insert(1)
+bst.insert(13)
+bst.insert(65)
+bst.insert(0)
+bst.insert(10)
 
-print(bst.remove(12))
-# bst.print_tree()
-# print
+bst.remove(13)
+print(bst)
+
 
 '''
         10
