@@ -1,7 +1,3 @@
-from anyio import current_time
-from sqlalchemy import null
-
-
 class node:
     def __init__(self, value):
         self.value = value
@@ -70,70 +66,157 @@ class binary_search_tree:
                     return {"parent_node": parent_node, "current_node": current_node}
 
     def remove(self, value):
-        # 3 cases to be dealt with
-        # Case 1: Node with no child, remove by point parent node to null
-        # Case 2: Node with 1 child, remove by pointing parent node right/ left(anyone which exist) to child of unwanted node
-        # Case 3: Node with 2 children, find minimum in right subtree, point it to parent node and delete it in former right subtree
+        
+        # Handle 2 special cases with other with sub cases under each special case
 
-        # if (self.root == None):
-        #      return "No element in the tree"
-        # else:
+        # Special case 1: Value = root value
+            
+        if (value == self.root.value):
+            # Root node with no child
+            if (self.root.left == None and self.root.right == None):
+                self.root = None 
+                self.length -= 1
 
-        result = self.lookup(value)
+            
+            elif (self.root.left or self.root.right):
+                # Root node with 1 child to the left
+                if (self.root.left and (self.root.right == None)):
+                    self.root = self.root.left 
+                    self.length -= 1
 
-        if (type(result) == str):
-            return result 
+                # Root node with 1 child to the right
+                elif ((self.root.left == None) and self.root.right):
+                    self.root = self.root.right
+                    self.length -= 1
 
+                # Root node with 2 children 
+                elif (self.root.left and self.root.right):
+                    holding_pointer = self.root.right
+                    
+                    # Confirm 3 cases if holding pointer has no child, 1 child and 2 children
+                    # No child
+                    if (holding_pointer.left == None and holding_pointer.right == None):
+                        holding_pointer.left = self.root.left 
+                        self.root = self.root.right 
+                        self.length -= 1
+                    # 1 child 
+                    elif (holding_pointer.left or holding_pointer.right):
+                        # Child on the left
+                        if (holding_pointer.left and (holding_pointer.right == None)):
+                            min_node = holding_pointer.left 
+                            min_node.left = self.root.left 
+                            min_node.right = self.root.right 
+                            holding_pointer.left = None 
+                            self.root = min_node 
+                            self.length -= 1
+                        # child on the Right 
+                        elif ((holding_pointer.left == None) and holding_pointer.right):
+                            holding_pointer.left = self.root.left
+                            self.root = self.root.right 
+                            self.length -= 1 
+                        # 2 children
+                        elif (holding_pointer.left and holding_pointer.right):
+                            parent_min_node = holding_pointer 
+                            min_node = holding_pointer.left 
+                            while (min_node.left != None):
+                                parent_min_node = min_node 
+                                min_node = min_node.left
+                            
+                            min_node.left = self.root.left 
+                            min_node.right = self.root.right 
+                            self.root = min_node
+                            parent_min_node.left = None 
+                            self.length -= 1
+
+        # Special case 2: Handle Non-root node ( Access to parent node of the unwanted node very essential)
         else:
-            parent_node = result["parent_node"]
-            unwanted_node = result["current_node"]
+            
+            result = self.lookup(value)
 
-            # Case 1: No child, hence find parent node and point to null
-            if (unwanted_node.left == None and unwanted_node.right == None):
-                if parent_node.left == unwanted_node:
-                    parent_node.left = None 
-                    self.length -= 1
-                elif parent_node.right == unwanted_node:
-                    parent_node.right = None 
-                    self.length -= 1 
+            if (type(result) == str):
+                return result 
 
-            # Case 2: One child, hence point parent node to the child of the unwanted node
-            elif (unwanted_node.left or unwanted_node.right):
-                if unwanted_node.left:
-                    unwanted_node_child = unwanted_node.left 
-                else:
-                    unwanted_node_child = unwanted_node.right 
+            else:
+                parent_node = result["parent_node"]
+                unwanted_node = result["current_node"]
 
-                if parent_node.left == unwanted_node:
-                    parent_node.left = unwanted_node_child
-                    self.length -= 1
-                elif parent_node.right == unwanted_node:
-                    parent_node.right = unwanted_node_child
-                    self.length -= 1 
 
-            # Case 3: Two children, find minimum node of right subtree, copy and point parent node to it and delete it from original position in right subtree
-            elif (unwanted_node.left and unwanted_node.right):
-                right_child_sub_tree = unwanted_node.right 
+                # Case 1: No child, hence find parent node and point to null
+                if (unwanted_node.left == None and unwanted_node.right == None):
+                    if (parent_node.left == unwanted_node):
+                        parent_node.left = None 
+                        self.length -= 1
+                    elif parent_node.right == unwanted_node:
+                        parent_node.right = None 
+                        self.length -= 1 
 
-                # Find minimum node on right subtree and its parent
-                min_node = right_child_sub_tree 
-                parent_min_node = right_child_sub_tree
-                while (min_node.left != None):
-                    parent_node = min_node 
-                    min_node = min_node.left 
-                
-                if (parent_node.left == unwanted_node):
-                    parent_node.left = min_node 
-                    min_node.right = right_child_sub_tree 
-                    parent_min_node.left = None 
-                    self.length -=1
+                # Case 2: One child, hence point parent node to the child of the unwanted node
+                elif (unwanted_node.left or unwanted_node.right):
+                    if (unwanted_node.left and (unwanted_node.right == None)): # if unwanted node child is on left, point parent node to it
+                        unwanted_node_child = unwanted_node.left 
+                        if (parent_node.left == unwanted_node):
+                            parent_node.left = unwanted_node_child
+                            self.length -= 1
+                    elif ((unwanted_node.left == None) and unwanted_node.right): # if unwanted node child is on right, point parent node to it
+                        unwanted_node_child = unwanted_node.right 
+                        if (parent_node.right == unwanted_node):
+                            parent_node.right = unwanted_node_child
+                            self.length -= 1
 
-                elif (parent_node.right == unwanted_node):
-                    parent_node.right = min_node
-                    min_node.right = right_child_sub_tree 
-                    parent_min_node.left = None 
-                    self.length -= 1
 
+                # Case 3: 
+                    elif (unwanted_node.left and unwanted_node.right):
+                        holding_pointer = unwanted_node.right 
+
+                    # if holding pointer(right sub tree) has no child, point right subtree to left child of unwanted node and point parent node to holding pointer
+                        if ((holding_pointer.left == None) and (holding_pointer.right == None)):
+                            holding_pointer.left = unwanted_node.left 
+                            if parent_node.left == unwanted_node:
+                                parent_node.left = holding_pointer 
+                                self.length -= 1
+                            elif parent_node.right == unwanted_node:
+                                parent_node.right = holding_pointer 
+                                self.length -= 1 
+                        elif (holding_pointer.left or holding_pointer.right):
+                            if (holding_pointer.left and (holding_pointer.right == None)):
+                                parent_min_node = holding_pointer 
+                                min_node = parent_min_node.left 
+
+                                if parent_node.left == unwanted_node:
+                                    parent_node.left = min_node 
+                                elif parent_node.right == unwanted_node:
+                                    parent_node.right = min_node 
+                            
+                                min_node.left = unwanted_node.left 
+                                min_node.right = unwanted_node.right 
+                                parent_min_node.left = None 
+                                self.length -= 1 
+
+                            elif ((holding_pointer.left == None) and holding_pointer.right):
+                                if parent_node.left == unwanted_node:
+                                    parent_node.left = holding_pointer 
+                                    holding_pointer.left = unwanted_node.left 
+                                    self.length -= 1 
+                                elif parent_node.right == unwanted_node:
+                                    parent_node.right = holding_pointer 
+                                    holding_pointer.left = unwanted_node.left 
+                                    self.length -= 1 
+
+                            elif (holding_pointer.left and holding_pointer.right):
+                                parent_min_node = holding_pointer 
+                                min_node = parent_min_node 
+                                while (min_node.left != None):
+                                    parent_min_node = min_node 
+                                    min_node = min_node.left 
+                            
+                                if parent_node.left == unwanted_node:
+                                    parent_node.left = min_node 
+                                elif parent_node.right == unwanted_node:
+                                    parent_node.right = min_node
+
+                                min_node.left = unwanted_node.left 
+                                min_node.right = unwanted_node.right 
+                                self.length -= 1
 
         return self.root
 
@@ -160,6 +243,22 @@ bst.insert(10)
 
 bst.remove(13)
 print(bst)
+bst.remove(5)
+print(bst)
+bst.remove(3)
+print(bst)
+bst.remove(7)
+print(bst) 
+bst.remove(1)
+print(bst)
+bst.remove(0)
+print(bst)
+bst.remove(10)
+print(bst)
+bst.remove(65)
+print(bst)
+
+
 
 
 '''
