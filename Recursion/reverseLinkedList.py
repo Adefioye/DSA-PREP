@@ -17,18 +17,25 @@ head.next.next = Node(3)
 head.next.next.next = Node(4)
 head.next.next.next.next = Node(5)
 
-def reverseLinkedList(head):
+# def reverseLinkedList(head):
 
-    if head == None or head.next == None:
-        return head 
+#     if head == None or head.next == None:
+#         return head 
 
-    p = reverseLinkedList(head.next)
+#     p = reverseLinkedList(head.next)
 
-    head.next.next = head 
-    head.next = None 
+#     head.next.next = head 
+#     head.next = None 
 
-    return p
+#     return p
 
+def reverseLinkedList(head, prev=None):
+    if head == None:
+        return prev
+    next = head.next
+    head.next = prev 
+    return reverseLinkedList(next, head)
 
+head.print_list()
 result = reverseLinkedList(head)
 result.print_list()
