@@ -4,6 +4,7 @@ matrix = [
     [11, 12, 13, 14, 15],
     [16, 17, 18, 19, 20]
 ]
+
 directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 
 def dfs2DTraversal(matrix):

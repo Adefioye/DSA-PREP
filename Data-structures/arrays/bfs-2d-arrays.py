@@ -1,0 +1,39 @@
+from collections import deque
+
+matrix = [
+    [1, 2, 3, 4, 5], 
+    [6, 7, 8, 9, 10],
+    [11, 12, 13, 14, 15],
+    [16, 17, 18, 19, 20]
+]
+
+
+def bfs2DTraversal(matrix):
+
+    ROWS = len(matrix)
+    COLS = len(matrix[0])
+
+    visited = set()
+    values = []
+    queue = deque()
+    queue.append((0, 0))
+    dirs = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+
+    while queue:
+        curPosition = queue.popleft()
+        row, col = curPosition
+
+        if row < 0 or row >= ROWS or col < 0 or col >= COLS or (row, col) in visited:
+            continue 
+
+        visited.add((row, col))
+        values.append(matrix[row][col])
+
+        for dir in dirs:
+            r, c = dir
+            queue.append((row + r, col + c))
+
+    return values
+
+
+print(bfs2DTraversal(matrix))
