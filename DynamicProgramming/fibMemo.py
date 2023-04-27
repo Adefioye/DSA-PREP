@@ -1,5 +1,6 @@
 
-
+# Brute force: time = 0(2 ^ n) and space = O(n)
+# Using memoization: time = O(n) and space = O(n)
 def fib(n, memo):
     
     if n in memo:
