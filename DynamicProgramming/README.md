@@ -16,3 +16,7 @@
     - add a base case to return memo values
     - store return values into memo 
 
+
+- __CAN SUM__: `Can you do it? Yes/No (Decision problem)`
+- __HOW SUM__: `How will you do it? (Combinatoric problem)`
+- __BEST SUM__: `What is the *best* way to do it? (Optimization problem)`
