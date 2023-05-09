@@ -24,7 +24,7 @@ def allConstruct(target, wordBank, memo):
     res = []
     for word in wordBank:
 
-        if target.find(word) == 0:
+        if target.startswith(word):
             suffix = target[len(word):]
             suffixWays = allConstruct(suffix, wordBank, memo)
             targetWays = [[word, *way] for way in suffixWays] 
