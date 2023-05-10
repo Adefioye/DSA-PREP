@@ -20,3 +20,11 @@
 - __CAN SUM__: `Can you do it? Yes/No (Decision problem)`
 - __HOW SUM__: `How will you do it? (Combinatoric problem)`
 - __BEST SUM__: `What is the *best* way to do it? (Optimization problem)`
+
+`__TABULATION RECIPE__`
+- Visualize the problem as a table
+- Size the table based on the inputs 
+- Initialize the table with default values
+- Seed the trivial answer into the table 
+- Iterate through the table 
+- Fill further positions based on the current position

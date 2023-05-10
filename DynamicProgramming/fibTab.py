@@ -1,4 +1,3 @@
-
 # time = O(n) and space = O(n)
 def fib(n):
 
