@@ -1,6 +1,5 @@
 
-
-
+# time = O(m*n*m); space = O(m * m)
 def howSum(targetSum, nums):
 
     tab = [None] * (targetSum + 1)
@@ -16,7 +15,6 @@ def howSum(targetSum, nums):
 
     return tab[targetSum]
 
-    return 
 print(howSum(7, [2, 3]))        # [3, 2, 2]
 print(howSum(7, [5, 3, 4, 7]))  # [4, 3]
 print(howSum(7, [2, 4]))        # None 
