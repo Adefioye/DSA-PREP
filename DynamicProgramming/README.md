@@ -28,3 +28,10 @@
 - Seed the trivial answer into the table 
 - Iterate through the table 
 - Fill further positions based on the current position
+
+`__GENERAL ADVICE FOR DYNAMIC PROGRAMMING__`
+- Notice any overlapping subproblems
+- Decide what is the trivially smallest input 
+- Think recursively to use memoization
+- Think iteratively to use tabulation
+- Draw a strategy first

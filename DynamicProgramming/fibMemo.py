@@ -1,6 +1,10 @@
 
 # Brute force: time = 0(2 ^ n) and space = O(n)
-# Using memoization: time = O(n) and space = O(n)
+# Using memoization: time = O(n) and space = O(n ^ 2)
+# Note: I do believe, we kinda increase space for memoized version
+# of the fib function. Since memo object is required which is
+# additional space for every fib function call 
+
 def fib(n, memo):
     
     if n in memo:
