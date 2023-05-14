@@ -1,20 +1,37 @@
 # time = O(n) and space = O(n)
+
+# MY SOLUTION
 def fib(n):
 
     if n <= 2:
-        return 1
+        return 1 
     
     tab = [0] * (n + 1)
     tab[1] = 1 
+    tab[2] = 1 
 
-    for i in range(n):
-        if i + 1 <= n:
-            tab[i + 1] += tab[i]
-        if i + 2 <= n:
-            tab[i + 2] += tab[i]
+    for i in range(3, n + 1):
+        tab[i] = tab[i - 1] + tab[i - 2]
 
-    # print(tab)
     return tab[n]
+
+# ALVINS SOLUTION
+# def fib(n):
+
+#     if n <= 2:
+#         return 1
+    
+#     tab = [0] * (n + 1)
+#     tab[1] = 1 
+
+#     for i in range(n):
+#         if i + 1 <= n:
+#             tab[i + 1] += tab[i]
+#         if i + 2 <= n:
+#             tab[i + 2] += tab[i]
+
+#     # print(tab)
+#     return tab[n]
 
 print(fib(1))   # 1
 print(fib(2))   # 1
