@@ -26,18 +26,43 @@ def howSum(targetSum, nums, memo):
     
     for num in nums:
         rem = targetSum - num 
-        remResult = howSum(rem, nums, memo)
+        remRes = howSum(rem, nums, memo)
 
-        if remResult != None:
-            memo[targetSum] = [*remResult, num]
+        if remRes != None:
+            remRes.append(num)
+            memo[targetSum] = remRes
             return memo[targetSum]
 
     memo[targetSum] = None    
     return None
-
 
 print(howSum(7, [2, 3], {}))        # [3, 2, 2]
 print(howSum(7, [5, 3, 4, 7], {}))  # [4, 3]
 print(howSum(7, [2, 4], {}))        # None 
 print(howSum(8, [2, 3, 5], {}))     # [2, 2, 2, 2]
 print(howSum(300, [7, 14], {}))     # None 
+
+# WITHOUT MEMOIZATION
+# def howSum(targetSum, nums):
+
+#     if targetSum == 0:
+#         return []
+    
+#     if targetSum < 0:
+#         return None 
+    
+#     for num in nums:
+#         rem = targetSum - num 
+#         remRes = howSum(rem, nums)
+
+#         if remRes != None:
+#             remRes.append(num)
+#             return remRes 
+        
+#     return None
+
+# print(howSum(7, [2, 3]))        # [3, 2, 2]
+# print(howSum(7, [5, 3, 4, 7]))  # [4, 3]
+# print(howSum(7, [2, 4]))        # None 
+# print(howSum(8, [2, 3, 5]))     # [2, 2, 2, 2]
+# print(howSum(300, [7, 14]))     # None 
