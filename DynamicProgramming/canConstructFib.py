@@ -1,23 +1,38 @@
 
 
-
-
-
+# MY SOLUTION
 def canConstruct(target, wordBank):
 
     tab = [False] * (len(target) + 1)
-    tab[0] = True
+    tab[0] = True 
 
-    for i in range(len(tab)):
+    for i in range(len(target) + 1):
 
-        if tab[i] is True:
-
+        if tab[i] == True:
             for word in wordBank:
 
-                if target[i : i + len(word)] == word:
-                    tab[i + len(word)] = True 
+                if target[i:].startswith(word) and i + len(word) <= len(target):
+                    tab[i + len(word)] = True
 
     return tab[len(target)]
+
+
+
+# def canConstruct(target, wordBank):
+
+#     tab = [False] * (len(target) + 1)
+#     tab[0] = True
+
+#     for i in range(len(tab)):
+
+#         if tab[i] is True:
+
+#             for word in wordBank:
+
+#                 if target[i : i + len(word)] == word:
+#                     tab[i + len(word)] = True 
+
+#     return tab[len(target)]
 
 
 
