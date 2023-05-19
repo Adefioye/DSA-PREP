@@ -12,28 +12,53 @@ You may reuse elements of `wordBank` as many times as needed.
 # m = target string; n = number of words in array
 # brute force: time = O(n^m * m) and space = O(m^2)
 # Memoized version: time = O(m*n*m) and space = O(m^2)
-def allConstruct(target, wordBank, memo):
 
-    if target in memo: 
-        return memo[target]
-    
+# MY SOLUTION
+def allConstruct(target, wordbank):
+
     if len(target) == 0:
-        memo[target] = [[]]
         return [[]]
     
-    res = []
-    for word in wordBank:
+    allComb = []
+
+    for word in wordbank:
 
         if target.startswith(word):
-            suffix = target[len(word):]
-            suffixWays = allConstruct(suffix, wordBank, memo)
-            targetWays = [[word, *way] for way in suffixWays] 
-            res.extend(targetWays)
+            rem = target[len(word):]
+            remCombs = allConstruct(rem, wordbank)
+            targetCombs = [[word, *comb] for comb in remCombs]
+            allComb.extend(targetCombs)
+            
+    return allComb
 
-    memo[target] = res
-    return res
+print(allConstruct("purple", ["purp", "p", "ur", "le", "purpl"]))
+print(allConstruct("abcdef", ["ab", "abc", "cd", "def", "abcd", "ef", "c"]))
+print(allConstruct("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"]))
+print(allConstruct("aaaaaaaaaaaaaaaaaaaaaaaaaaz", ["a", "aa", "aaa", "aaaa", "aaaaa"]))
 
-print(allConstruct("purple", ["purp", "p", "ur", "le", "purpl"], {}))
-print(allConstruct("abcdef", ["ab", "abc", "cd", "def", "abcd", "ef", "c"], {}))
-print(allConstruct("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"], {}))
-print(allConstruct("aaaaaaaaaaaaaaaaaaaaaaaaaaz", ["a", "aa", "aaa", "aaaa", "aaaaa"], {}))
+# ALVINS SOLUTION
+# def allConstruct(target, wordBank, memo):
+
+#     if target in memo: 
+#         return memo[target]
+    
+#     if len(target) == 0:
+#         memo[target] = [[]]
+#         return [[]]
+    
+#     res = []
+#     for word in wordBank:
+
+#         if target.startswith(word):
+#             suffix = target[len(word):]
+#             suffixWays = allConstruct(suffix, wordBank, memo)
+#             targetWays = [[word, *way] for way in suffixWays] 
+#             res.extend(targetWays)
+
+#     memo[target] = res
+#     return res
+
+# print(allConstruct("purple", ["purp", "p", "ur", "le", "purpl"], {}))
+# print(allConstruct("abcdef", ["ab", "abc", "cd", "def", "abcd", "ef", "c"], {}))
+# print(allConstruct("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"], {}))
+# print(allConstruct("aaaaaaaaaaaaaaaaaaaaaaaaaaz", ["a", "aa", "aaa", "aaaa", "aaaaa"], {}))

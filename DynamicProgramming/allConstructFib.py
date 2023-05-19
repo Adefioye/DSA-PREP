@@ -5,20 +5,42 @@ def allConstruct(target, wordBank):
     tab = [[]] * (len(target) + 1)
     tab[0] = [[]]
 
-    for i in range(len(tab)):
+    for i in range(len(target) + 1):
         for word in wordBank:
-            if target[i : i + len(word)] == word:
-                newCombs = [[*item, word] for item in tab[i]]
-                print(newCombs)
-                print(tab[i + len(word)])
-                tab[i + len(word)].extend(newCombs)
+
+            if target[i:].find(word) == 0 and i + len(word) <= len(target):
+                newCombs = [[*comb, word] for comb in tab[i]]
+                enteredCombs= [comb for comb in tab[i + len(word)]] 
+                enteredCombs.extend(newCombs)
+                tab[i + len(word)] = enteredCombs
+                # print(i + len(word), tab[i + len(word)])
 
     return tab[len(target)]
 
 print(allConstruct("purple", ["purp", "p", "ur", "le", "purpl"]))
-# print(allConstruct("abcdef", ["ab", "abc", "cd", "def", "abcd", "ef", "c"]))
-# print(allConstruct("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"]))
-# print(allConstruct("aaaaaaaaaaaaaaaaaaaaaaaaaaz", ["a", "aa", "aaa", "aaaa", "aaaaa"]))
+print(allConstruct("abcdef", ["ab", "abc", "cd", "def", "abcd", "ef", "c"]))
+print(allConstruct("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"]))
+print(allConstruct("aaaaaaaaaaz", ["a", "aa", "aaa", "aaaa", "aaaaa"]))
+
+# def allConstruct(target, wordBank):
+
+#     tab = [[]] * (len(target) + 1)
+#     tab[0] = [[]]
+
+#     for i in range(len(tab)):
+#         for word in wordBank:
+#             if target[i : i + len(word)] == word:
+#                 newCombs = [[*item, word] for item in tab[i]]
+#                 print(newCombs)
+#                 print(tab[i + len(word)])
+#                 tab[i + len(word)].extend(newCombs)
+
+#     return tab[len(target)]
+
+# print(allConstruct("purple", ["purp", "p", "ur", "le", "purpl"]))
+# # print(allConstruct("abcdef", ["ab", "abc", "cd", "def", "abcd", "ef", "c"]))
+# # print(allConstruct("skateboard", ["bo", "rd", "ate", "t", "ska", "sk", "boar"]))
+# # print(allConstruct("aaaaaaaaaaaaaaaaaaaaaaaaaaz", ["a", "aa", "aaa", "aaaa", "aaaaa"]))
 
 ## FIRST SOLUTION
 # def allConstruct(target, wordBank):
