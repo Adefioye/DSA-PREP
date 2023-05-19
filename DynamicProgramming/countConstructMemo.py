@@ -17,7 +17,6 @@ def countConstruct(target, wordBank, memo):
         return memo[target]
     
     if len(target) == 0:
-        memo[target] = 1
         return 1 
     
     size = 0
